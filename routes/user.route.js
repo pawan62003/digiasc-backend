@@ -57,7 +57,7 @@ userRoute.delete("/:id",async(req,res)=>{
 userRoute.patch("/:id",async(req,res)=>{
     try {
         const {id} = req.params;
-        const afterUpdation = await UserModel.findByIdAndDelete({_id:id},req.body)
+        const afterUpdation = await UserModel.findByIdAndUpdate({_id:id},req.body)
         res.send({"msg":"user Data id updated"})
     } catch (error) {
         res.send({"err":error})
