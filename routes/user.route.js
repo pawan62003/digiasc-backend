@@ -8,9 +8,10 @@ userRoute.get("/",async(req,res)=>{
         const {page,limit,q} = req.query
         const newPage = page || 1;
         const newLimit = limit || 6;
+        // const newrole = role|| 
         const skip = (newPage - 1) * newLimit;
         const regexPattern = q.split(' ').map(term => `(?=.*${term})`).join('');
-        const data = await UserModel.find({ name: { $regex: regexPattern, $options: 'i' },}||{skill: { $regex: regexPattern, $options: 'i' }})
+        const data = await UserModel.find({ name: { $regex: regexPattern, $options: 'i' }})
         .skip(skip).limit(newLimit)
         const count = await UserModel.countDocuments({ name: { $regex: regexPattern, $options: 'i' }}||{skill: { $regex: regexPattern, $options: 'i' }});
           res.status(200).send({

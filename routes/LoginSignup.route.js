@@ -24,15 +24,21 @@ LoginSignupRoute.post("/login",async(req,res)=>{
     try {
         const {email,password} = req.body;
         const data = await LoginSignupModel.find({email})
-        if(!data){
+        console.log(data)
+        if(data.length===0){
             res.send({"msg":"Please Signup your Data"})
         }
         else{
-            const token = jwt.sign({userId:data._id},"digi_asc")
+            if(data[0].password===password){
+                const token = jwt.sign({userId:data._id},"digi_asc")
             res.send({
                 token,
                 "msg":"Login successfully"
             })
+            }
+            else{
+                res.send({"msg":"incorrect password"})
+            }
         }
     } catch (error) {
         res.send({"err":error})
